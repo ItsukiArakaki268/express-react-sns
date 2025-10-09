@@ -24,16 +24,6 @@ con.connect((err) => {
   console.log("DB Connected");
 });
 
-app.get("/", (req, res) => {
-  res.status(200).send("request to /");
-  console.log("/");
-});
-
-app.get("/post", (req, res) => {
-  res.status(200).send("request to /post");
-  console.log("/post");
-});
-
 app.get("/users_db", (req, res) => {
   const sql = "select * from users";
 
