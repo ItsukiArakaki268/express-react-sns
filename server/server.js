@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const mysql = require("mysql2");
-// const cors = require("cors");
+const cors = require("cors");
 
 const port = 3000;
 const dbHost = process.env.DB_HOST;
@@ -11,6 +11,8 @@ const dbPass = process.env.DB_PASS;
 const dbName = process.env.DB_NAME;
 
 const app = express();
+
+app.use(cors());
 
 const con = mysql.createConnection({
   host: dbHost,
@@ -24,7 +26,7 @@ con.connect((err) => {
   console.log("DB Connected");
 });
 
-app.get("/users_db", (req, res) => {
+app.get("/users", (req, res) => {
   const sql = "select * from users";
 
   con.query(sql, (err, result) => {
@@ -35,7 +37,7 @@ app.get("/users_db", (req, res) => {
   });
 });
 
-app.get("/posts_db", (req, res) => {
+app.get("/posts", (req, res) => {
   const sql = "select * from posts";
 
   con.query(sql, (err, result) => {
