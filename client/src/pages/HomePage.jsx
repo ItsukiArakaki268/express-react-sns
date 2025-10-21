@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 function HomePage() {
   const [posts, setPosts] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -14,18 +15,36 @@ function HomePage() {
       }
     };
 
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/users");
+        const data = await response.json();
+        setUsers(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     fetchPosts();
+    fetchUsers();
   }, []);
 
   return (
     <div>
-      <h1>投稿</h1>
+      <h1>express+react SNS</h1>
+      <h2>投稿</h2>
       <ul>
         {posts.map((post) => (
           <li key={post.id}>
+            {post.content}
             ユーザーID: {post.user_id}
-            内容: {post.content}
           </li>
+        ))}
+      </ul>
+      <h2>こんなユーザーがいます</h2>
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>{user.username}</li>
         ))}
       </ul>
     </div>
